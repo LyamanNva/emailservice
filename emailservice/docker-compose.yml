@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgres:15
@@ -19,21 +21,34 @@ services:
     ports:
       - "6379:6379"
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: emailservice-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"   # application üçün
+      - "15672:15672" # web interface üçün
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
   emailservice-app:
     build: .
     container_name: emailservice-app
-    ports:
-      - "8080:8080"
     depends_on:
       - postgres
       - redis
+      - rabbitmq
+    ports:
+      - "8080:8080"
     environment:
+      # PostgreSQL
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/emaildb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
 
-      # Gmail üçün konfiqurasiya
+      # Gmail SMTP
       SPRING_MAIL_HOST: smtp.gmail.com
       SPRING_MAIL_PORT: 587
       SPRING_MAIL_USERNAME: "lemannuriyeva006@gmail.com"
@@ -41,9 +56,16 @@ services:
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
 
-      # Redis konfiqurasiyası
+      # Redis
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
 
+      # RabbitMQ
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+
 volumes:
   pgdata:
+
