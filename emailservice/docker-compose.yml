@@ -12,6 +12,13 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7
+    container_name: emailservice-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
   emailservice-app:
     build: .
     container_name: emailservice-app
@@ -19,18 +26,24 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+      - redis
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/emaildb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+
+      # Gmail üçün konfiqurasiya
       SPRING_MAIL_HOST: smtp.gmail.com
       SPRING_MAIL_PORT: 587
       SPRING_MAIL_USERNAME: "lemannuriyeva006@gmail.com"
-      SPRING_MAIL_PASSWORD: "xtpn xlsk mobg wtwq"
+      SPRING_MAIL_PASSWORD: "znde hxyy dwxn yjju"
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
 
+      # Redis konfiqurasiyası
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+
 volumes:
   pgdata:
-
