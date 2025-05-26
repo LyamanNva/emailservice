@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Bildirişi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f7;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .email-header {
+            background-color: #4f46e5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .email-body {
+            padding: 30px;
+        }
+        .email-body h2 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .email-body p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .email-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #999999;
+            background-color: #f9f9f9;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 25px;
+            background-color: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+
+<div class="email-container">
+    <div class="email-header">
+        <h1>LYDev Email Xidməti</h1>
+    </div>
+
+    <div class="email-body">
+        <h2>Salam, {{name}} 👋</h2>
+        <p>
+            Bu mesaj sizə uğurla çatdırıldı! Spring Boot vasitəsilə göndərilən bu email Bootstrap ilə dizayn edilmişdir.
+        </p>
+        <p>
+            Əgər bu email sizin tərəfinizdən istənilmədən göndərilibsə, zəhmət olmasa bizimlə əlaqə saxlayın.
+        </p>
+
+        <a href="https://yourproject.com" class="button">Layihəyə Bax</a>
+    </div>
+
+    <div class="email-footer">
+        &copy; 2025 LYDev. Bütün hüquqlar qorunur.
+    </div>
+</div>
+
+</body>
+</html>
